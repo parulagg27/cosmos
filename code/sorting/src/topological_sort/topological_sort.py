@@ -31,6 +31,7 @@ from collections import deque
 
 GRAY, BLACK = 0, 1
 
+
 def topological(graph):
     order, enter, state = deque(), set(graph), {}
 
@@ -38,17 +39,23 @@ def topological(graph):
         state[node] = GRAY
         for k in graph.get(node, ()):
             sk = state.get(k, None)
-            if sk == GRAY: raise ValueError("cycle")
-            if sk == BLACK: continue
+            if sk == GRAY:
+                raise ValueError("cycle")
+            if sk == BLACK:
+                continue
             enter.discard(k)
             dfs(k)
         order.appendleft(node)
         state[node] = BLACK
 
-    while enter: dfs(enter.pop())
+    while enter:
+        dfs(enter.pop())
     return order
+
 
 print topological(graph1)
 print topological(graph2)
-try: topological(graph3)
-except ValueError: print "Cycle!"
+try:
+    topological(graph3)
+except ValueError:
+    print "Cycle!"
